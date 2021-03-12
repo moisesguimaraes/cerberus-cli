@@ -47,7 +47,7 @@ clean: ## remove all generated artifacts
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
 
-dist: clean # test clean ## builds source and wheel package
+dist: clean test clean ## builds source and wheel package
 	python3 setup.py sdist
 	python3 setup.py bdist_wheel
 	ls -l dist

@@ -59,8 +59,7 @@ def register_opts(conf):
 
 
 def get_config():
-    """
-    Returns a new config object with registered config options.
+    """Returns a new config object with registered config options.
 
     :returns: an oslo_config.cfg.ConfigOpts object
     """

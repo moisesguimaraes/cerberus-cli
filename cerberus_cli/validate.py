@@ -12,8 +12,6 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-import sys
-
 import cerberus
 import yaml
 
@@ -21,8 +19,6 @@ from cerberus_cli import config
 
 
 def main():
-    status = 0
-    new_line = "\n\t"
     conf = config.get_config()
 
     conf(project="cerberus")
@@ -30,7 +26,7 @@ def main():
     if not conf.resolve_tags:
         yaml.SafeLoader.add_multi_constructor(
             "!",
-            lambda loader, suffix, node: loader.construct_mapping(node)
+            lambda loader, suffix, node: loader.construct_mapping(node),
         )
 
     with open(conf.schema, "r") as fd:
@@ -38,6 +34,8 @@ def main():
 
     validator = cerberus.Validator(schema)
 
+    status = 0
+    new_line = "\n\t"
     for fname in conf.files:
         with open(fname, "r") as fd:
             if not validator.validate(yaml.safe_load(fd)):
@@ -46,8 +44,8 @@ def main():
                     print(f"{k}:{new_line}{new_line.join(e)}")
                 status = 1
 
-    sys.exit(status)
+    return status
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())
