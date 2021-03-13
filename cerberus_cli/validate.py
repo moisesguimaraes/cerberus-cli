@@ -41,7 +41,7 @@ def main():
             if not validator.validate(yaml.safe_load(fd)):
                 print(fname)
                 for k, e in validator.errors.items():
-                    print(f"{k}:{new_line}{new_line.join(e)}")
+                    print(f"{k}:{new_line}{new_line.join(map(str, e))}")
                 status = 1
 
     return status
